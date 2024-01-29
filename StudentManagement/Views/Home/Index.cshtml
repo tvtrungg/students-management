@@ -1,0 +1,39 @@
+﻿@using StudentManagement.Models.Entities
+@{
+    ViewData["Title"] = "Home Page";
+    var subjects = ViewBag.Subjects as List<Subject>;
+    var studentScores = ViewBag.StudentScores as List<StudentScore>;
+}
+
+<h1>Student Scores Summary</h1>
+
+@foreach (var studentRow in studentScores)
+{
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Student: @studentRow.StudentName</h5>
+
+            <dl class="row">
+                @foreach (var subject in subjects)
+                {
+                    <dt class="col-sm-3">@subject.Name</dt>
+                    <dd class="col-sm-9">
+                        @{
+                            var score = studentRow.Scores.FirstOrDefault(s => s.SubjectId == subject.Id);
+                        }
+                        @if (score != null)
+                        {
+                            <span>@score.Score</span>
+                        }
+                        else
+                        {
+                            <span>No Score</span>
+                        }
+                    </dd>
+                }
+            </dl>
+
+            <a href="@Url.Action("EditScore", "Home", new { id = studentRow.StudentId })" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+}

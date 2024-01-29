@@ -1,0 +1,78 @@
+﻿@model IEnumerable<StudentManagement.Models.Entities.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Student Management</h1>
+
+<div class="d-flex align-items-center justify-content-between my-5">
+    <form class="d-flex" role="search" asp-controller="Students" asp-action="Index" method="get">
+        <input name="searchString" class="form-control me-2" type="search" placeholder="Search Name" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+        <button class="btn btn-outline-danger ms-2">Reset</button>
+    </form>
+
+    <button class="btn bg-primary">
+        <a asp-action="Create" class="text-decoration-none text-white">Create New</a>
+    </button>
+
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (Model.Any())
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+}
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center p-5">No Data</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
